@@ -1,1 +1,431 @@
-<h1>Infigrid Documentation</h1>
+<h1 class="code-line" data-line-start=0 data-line-end=1 ><a id="INFIGRID_0"></a>INFIGRID</h1>
+<p class="has-line-data" data-line-start="2" data-line-end="3"><code>[Angular CLI] version 9.0.2</code></p>
+<h2 class="code-line" data-line-start=4 data-line-end=5 ><a id="Demo_4"></a>Demo</h2>
+<p class="has-line-data" data-line-start="6" data-line-end="7">La grille est visible sur ce lien <a href="https://infigrid.azurewebsites.net/">infigrid demo</a></p>
+<h2 class="code-line" data-line-start=8 data-line-end=9 ><a id="Build_et_serveur_de_Dev_8"></a>Build et serveur de Dev</h2>
+<ul>
+<li class="has-line-data" data-line-start="10" data-line-end="11">Lancer le build de developpement : <code>npm run build:dev</code></li>
+<li class="has-line-data" data-line-start="11" data-line-end="12">Lancer le serveur de développement : <code>ng serve</code> et aller à <code>http://localhost:4200/</code></li>
+<li class="has-line-data" data-line-start="12" data-line-end="13">Lancer le build de production : <code>npm run build:prod</code> , Le build sera dans le dossier <code>dist/</code>.</li>
+<li class="has-line-data" data-line-start="13" data-line-end="14">Lancer les tests unitaires : <code>npm run test</code></li>
+<li class="has-line-data" data-line-start="14" data-line-end="15">Lancer les tests e2e : <code>npm run test:ui</code></li>
+<li class="has-line-data" data-line-start="15" data-line-end="17">Lancer le Lint : <code>npm run lint</code></li>
+</ul>
+<h2 class="code-line" data-line-start=17 data-line-end=18 ><a id="INSTALLATION_17"></a>INSTALLATION</h2>
+<ol>
+<li class="has-line-data" data-line-start="19" data-line-end="21">
+<p class="has-line-data" data-line-start="19" data-line-end="20"><code>npm i --save infigrid @angular/material bootstrap @ng-bootstrap/ng-bootstrap</code></p>
+</li>
+<li class="has-line-data" data-line-start="21" data-line-end="28">
+<p class="has-line-data" data-line-start="21" data-line-end="22">Style :</p>
+<ul>
+<li class="has-line-data" data-line-start="23" data-line-end="24">Importer le thème material de votre choix dans styles.css <code>@import &quot;@angular/material/prebuilt-themes/indigo-pink.css&quot;</code>;</li>
+<li class="has-line-data" data-line-start="24" data-line-end="25">Importer <code>@import &quot;bootstrap/dist/css/bootstrap.min.css&quot;</code>; dans styles.css</li>
+<li class="has-line-data" data-line-start="25" data-line-end="26">Importer material icons dans le fichier <code>index.html</code></li>
+<li class="has-line-data" data-line-start="26" data-line-end="28"><code>&lt;link href=&quot;https://fonts.googleapis.com/icon?family=Material+Icons&quot; rel=&quot;stylesheet&quot; /&gt;</code></li>
+</ul>
+</li>
+</ol>
+<h2 class="code-line" data-line-start=28 data-line-end=29 ><a id="GUIDE_UTILISATION_28"></a>GUIDE UTILISATION</h2>
+<ol>
+<li class="has-line-data" data-line-start="30" data-line-end="44">
+<p class="has-line-data" data-line-start="30" data-line-end="31">Importer le module InfigridModule et BrowserAnimationsModule dans votre app module <code>app.module.ts</code></p>
+<pre><code class="has-line-data" data-line-start="33" data-line-end="43" class="language-typescript"><span class="hljs-keyword">import</span> { InfigridModule } from <span class="hljs-string">'infigrid'</span>;
+<span class="hljs-keyword">import</span> { DatePipe } from <span class="hljs-string">'@angular/common'</span>;
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule, InfigridModule, BrowserAnimationsModule],
+  providers: [DatePipe],
+  bootstrap: [AppComponent]
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> AppModule {}
+</code></pre>
+</li>
+<li class="has-line-data" data-line-start="44" data-line-end="175">
+<p class="has-line-data" data-line-start="44" data-line-end="45">Dans le fichier typescript de votre <code>component.ts</code></p>
+<pre><code class="has-line-data" data-line-start="47" data-line-end="174" class="language-typescript"><span class="hljs-comment">// ...</span>
+<span class="hljs-keyword">import</span> { InfigridConfig, InfigridColumn } from <span class="hljs-string">'infigrid'</span>;
+<span class="hljs-keyword">import</span> { DatePipe } from <span class="hljs-string">'@angular/common'</span>;
+
+<span class="hljs-keyword">const</span> ELEMENT_DATA = [
+  {
+    position: <span class="hljs-number">1</span>,
+    name: <span class="hljs-string">'Hydrogen'</span>,
+    weight: <span class="hljs-number">1.0079</span>,
+    symbol: <span class="hljs-string">'H'</span>,
+    <span class="hljs-keyword">type</span>: <span class="hljs-string">'A'</span>,
+    good: <span class="hljs-literal">true</span>
+  },
+  {
+    position: <span class="hljs-number">2</span>,
+    name: <span class="hljs-string">'Helium'</span>,
+    weight: <span class="hljs-number">4.0026</span>,
+    symbol: <span class="hljs-string">'He'</span>,
+    <span class="hljs-keyword">type</span>: <span class="hljs-string">'A'</span>,
+    good: <span class="hljs-literal">false</span>
+  },
+  {
+    position: <span class="hljs-number">3</span>,
+    name: <span class="hljs-string">'Lithium'</span>,
+    weight: <span class="hljs-number">6.941</span>,
+    symbol: <span class="hljs-string">'Li'</span>,
+    <span class="hljs-keyword">type</span>: <span class="hljs-string">'B'</span>,
+    good: <span class="hljs-literal">true</span>
+  }
+];
+@Component({
+  <span class="hljs-comment">//..</span>
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> PropertiesComponent <span class="hljs-keyword">implements</span> OnInit {
+  <span class="hljs-comment">/*
+        interface InfigridConfig = {
+        pageSize?: number;
+        pageSizeOptions?: number[];
+        enableFiltering?: boolean;
+        externalFiltering?: boolean;
+        externalPaging?: boolean;
+        defaultLocale: 'en' | 'fr';
+        dateSeparator: '-' | '/';
+        externalPagingOptions?: {
+        totalElements: number;
+        totalPages: number;
+        pageIndex: number;
+        };
+        showSelection?: boolean;
+        showAddButton?: boolean;
+        showDeleteButton?: boolean;
+        showEditButton?: boolean;
+        headerBgColor?: string;
+        hasInsertConfirmationButton?: boolean;
+        hasUpdateConfirmationButton?: boolean;
+        customEditTemplate?: boolean;
+        customAddTemplate?: boolean;
+        rowBg?: string;
+        confirmAction?: boolean;
+    } */</span>
+
+  <span class="hljs-keyword">public</span> tableConfig: InfigridConfig = {
+    pageSize: <span class="hljs-number">21</span>, <span class="hljs-comment">// nombre d'element par page</span>
+    pageSizeOptions: [<span class="hljs-number">3</span>, <span class="hljs-number">6</span>, <span class="hljs-number">9</span>, <span class="hljs-number">12</span>, <span class="hljs-number">15</span>, <span class="hljs-number">18</span>, <span class="hljs-number">21</span>],
+    enableFiltering: <span class="hljs-literal">true</span>,
+    externalPaging: <span class="hljs-literal">false</span>,
+    externalFiltering: <span class="hljs-literal">false</span>, <span class="hljs-comment">// doit etre true si externalPaging: true</span>
+    externalPagingOptions: {
+      <span class="hljs-comment">// doit etre renseigner lorsque externalPaging: true</span>
+      totalElements: <span class="hljs-number">0</span>,
+      totalPages: <span class="hljs-number">0</span>,
+      pageIndex: <span class="hljs-number">0</span>
+    },
+    showSelection: <span class="hljs-literal">true</span>,
+    showEditButton: <span class="hljs-literal">true</span>,
+    showDeleteButton: <span class="hljs-literal">true</span>,
+    showAddButton: <span class="hljs-literal">true</span>,
+    rowBg: <span class="hljs-string">'#eee'</span>,
+    confirmAction: <span class="hljs-literal">true</span>
+  };
+
+  <span class="hljs-comment">/*interface InfigridColumn {
+    type: "string" | "number" | "boolean" | "select" | "date";
+    prop: string;
+    name: string;
+    resizable?: boolean;
+    sortable?: boolean;
+    selectValues?: any[];
+    } */</span>
+
+  <span class="hljs-keyword">public</span> columns: InfigridColumn[] = [
+    { prop: <span class="hljs-string">'position'</span>, name: <span class="hljs-string">'Position'</span>, <span class="hljs-keyword">type</span>: <span class="hljs-string">'number'</span> },
+    { prop: <span class="hljs-string">'name'</span>, name: <span class="hljs-string">'Nom'</span>, <span class="hljs-keyword">type</span>: <span class="hljs-string">'string'</span> },
+    { prop: <span class="hljs-string">'weight'</span>, name: <span class="hljs-string">'Poids'</span>, <span class="hljs-keyword">type</span>: <span class="hljs-string">'number'</span> },
+    { prop: <span class="hljs-string">'symbol'</span>, name: <span class="hljs-string">'Symbole'</span>, <span class="hljs-keyword">type</span>: <span class="hljs-string">'string'</span> },
+    { prop: <span class="hljs-string">'type'</span>, name: <span class="hljs-string">'Type'</span>, <span class="hljs-keyword">type</span>: <span class="hljs-string">'select'</span> },
+    { prop: <span class="hljs-string">'good'</span>, name: <span class="hljs-string">'Utile'</span>, <span class="hljs-keyword">type</span>: <span class="hljs-string">'boolean'</span> },
+    { prop: <span class="hljs-string">'discoveryDate'</span>, name: <span class="hljs-string">'Date découverte'</span>, <span class="hljs-keyword">type</span>: <span class="hljs-string">'date'</span> }
+  ];
+
+  <span class="hljs-keyword">public</span> data: <span class="hljs-built_in">any</span>[] = [];
+
+  <span class="hljs-constructor"><span class="hljs-keyword">constructor</span>(private datepipe: DatePipe) </span>{
+    <span class="hljs-comment">// Cette manoeuvre consiste a ajouter une proprieté `discoveryDate` pour chaque objet dans la liste</span>
+    <span class="hljs-comment">// Vous n'etes pas obliger la faire</span>
+    <span class="hljs-keyword">this</span>.data = ELEMENT_DATA.map((_, index) =&gt;
+      index % <span class="hljs-number">2</span> === <span class="hljs-number">0</span>
+        ? {
+            ..._,
+            discoveryDate: <span class="hljs-keyword">this</span>.datepipe.transform(
+              <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().setDate(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().getDate() + index)),
+              <span class="hljs-string">'dd-MM-yyyy'</span>
+            )
+          }
+        : {
+            ..._,
+            discoveryDate: <span class="hljs-keyword">this</span>.datepipe.transform(
+              <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().setDate(<span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().getDate() + index)),
+              <span class="hljs-string">'dd-MM-yyyy'</span>
+            )
+          }
+    );
+  }
+
+  ngOnInit() {}
+}
+</code></pre>
+</li>
+<li class="has-line-data" data-line-start="175" data-line-end="188">
+<p class="has-line-data" data-line-start="175" data-line-end="176">Dans le fichier <code>component.html</code> de votre composant ajouter le composant infigrid</p>
+<pre><code class="has-line-data" data-line-start="178" data-line-end="187" class="language-html"><span class="hljs-tag">&lt;<span class="hljs-title">infigrid</span>
+  (<span class="hljs-attribute">delete</span>)=<span class="hljs-value">"on_delete($event)"</span>
+  [<span class="hljs-attribute">data</span>]=<span class="hljs-value">"data"</span>
+  [<span class="hljs-attribute">tableConfig</span>]=<span class="hljs-value">"tableConfig"</span>
+  [<span class="hljs-attribute">columns</span>]=<span class="hljs-value">"columns"</span>
+  (<span class="hljs-attribute">edit</span>)=<span class="hljs-value">"edit($event)"</span>
+&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">infigrid</span>&gt;</span>
+</code></pre>
+</li>
+</ol>
+<h2 class="code-line" data-line-start=188 data-line-end=189 ><a id="Comprendre_la_configuration_188"></a>Comprendre la configuration</h2>
+<table class="table table-striped table-bordered">
+<thead>
+<tr>
+<th>Propriété</th>
+<th style="text-align:center">Default</th>
+<th style="text-align:center">Description</th>
+<th style="text-align:center">Example</th>
+<th style="text-align:right">Deprecie</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>PageSize</code></td>
+<td style="text-align:center"><code>10</code></td>
+<td style="text-align:center">Le nombre de ligne à afficher par page</td>
+<td style="text-align:center"><code>nombre entier</code></td>
+<td style="text-align:right">No</td>
+</tr>
+<tr>
+<td><code>PageSizeOptions</code></td>
+<td style="text-align:center"><code>[10, 20, 30]</code></td>
+<td style="text-align:center">Tableau des nombres de lignes possible à afficher par page</td>
+<td style="text-align:center"><code>[10, 20, 50, 100]</code></td>
+<td style="text-align:right">No</td>
+</tr>
+<tr>
+<td><code>enableFiltering</code></td>
+<td style="text-align:center"><code>true</code></td>
+<td style="text-align:center">Permet d’afficher ou cacher les filtres</td>
+<td style="text-align:center"><code>true</code> - <code>false</code></td>
+<td style="text-align:right">No</td>
+</tr>
+<tr>
+<td><code>externalPaging</code></td>
+<td style="text-align:center"><code>false</code></td>
+<td style="text-align:center">Permet de definir si la pagination est interne ou externe</td>
+<td style="text-align:center"><code>true</code> - <code>false</code></td>
+<td style="text-align:right">No</td>
+</tr>
+<tr>
+<td><code>externalPagingOptions</code></td>
+<td style="text-align:center"><code>{totalElements: 0, totalPages: 0, pageIndex: 0}</code></td>
+<td style="text-align:center">contient les donnees de la pagination</td>
+<td style="text-align:center"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td><code>showSelection</code></td>
+<td style="text-align:center"><code>false</code></td>
+<td style="text-align:center">Permet d’afficher ou cacher les <code>checkbox de selection</code></td>
+<td style="text-align:center"><code>true</code> ou <code>false</code></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td><code>showEditButton</code></td>
+<td style="text-align:center"><code>false</code></td>
+<td style="text-align:center">Permet d’afficher ou cacher le <code>bouton modifier</code></td>
+<td style="text-align:center"><code>true</code> ou <code>false</code></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td><code>showDeleteButton</code></td>
+<td style="text-align:center"><code>false</code></td>
+<td style="text-align:center">Permet d’afficher ou cacher le <code>bouton supprimer</code></td>
+<td style="text-align:center"><code>true</code> ou <code>false</code></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td><code>showAddButton</code></td>
+<td style="text-align:center"><code>false</code></td>
+<td style="text-align:center">Permet d’afficher ou cacher le <code>button cacher</code></td>
+<td style="text-align:center"><code>true</code> ou <code>false</code></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td><code>confirmaAction</code></td>
+<td style="text-align:center"><code>false</code></td>
+<td style="text-align:center">Permet d’afficher ou cacher <code>la boite de dialog de confirmation</code> lors de la suppression des lignes</td>
+<td style="text-align:center"><code>true</code> ou <code>false</code></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td><code>customAddTemplate</code></td>
+<td style="text-align:center"><code>false</code></td>
+<td style="text-align:center">Permet de personnaliser le template de creation</td>
+<td style="text-align:center"><code>true</code> ou <code>false</code></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td><code>customEditTemplate</code></td>
+<td style="text-align:center"><code>false</code></td>
+<td style="text-align:center">Permet de personnaliser le template de modification</td>
+<td style="text-align:center"><code>true</code> ou <code>false</code></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td><code>defaultLocale</code></td>
+<td style="text-align:center"><code>fr</code></td>
+<td style="text-align:center">Permet de choisir le locale à utiliser pour l’affichage des dates</td>
+<td style="text-align:center"><code>fr</code> ou <code>en</code></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td><code>dateSeparator</code></td>
+<td style="text-align:center"><code>-</code></td>
+<td style="text-align:center">Le séparateur de date</td>
+<td style="text-align:center"><code>-</code> ou <code>/</code></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td><code>hasUpdateConfirmationButton</code></td>
+<td style="text-align:center"><code>false</code></td>
+<td style="text-align:center">Permet d’afficher ou cacher le <code>bouton de sauvegarde</code> pendant la modification</td>
+<td style="text-align:center"><code>true</code> ou <code>false</code></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td><code>hasInsertConfirmationButton</code></td>
+<td style="text-align:center"><code>false</code></td>
+<td style="text-align:center">Permet d’afficher ou cacher le <code>bouton de sauvegarde</code> pendant la création</td>
+<td style="text-align:center"><code>true</code> ou <code>false</code></td>
+<td style="text-align:right"></td>
+</tr>
+</tbody>
+</table>
+<h2 class="code-line" data-line-start=209 data-line-end=210 ><a id="Pagination_server_et_filtre_server_209"></a>Pagination server et filtre server</h2>
+<ul>
+<li class="has-line-data" data-line-start="211" data-line-end="226">
+<p class="has-line-data" data-line-start="211" data-line-end="212">Dans le <code>component.html</code> du composant ajoutez les evenements <code>(onPage)</code> et <code>(filters)</code> comme ci-dessous</p>
+<pre><code class="has-line-data" data-line-start="214" data-line-end="225" class="language-html"><span class="hljs-tag">&lt;<span class="hljs-title">infigrid</span>
+  (<span class="hljs-attribute">delete</span>)=<span class="hljs-value">"on_delete($event)"</span>
+  [<span class="hljs-attribute">data</span>]=<span class="hljs-value">"data"</span>
+  [<span class="hljs-attribute">tableConfig</span>]=<span class="hljs-value">"tableConfig"</span>
+  [<span class="hljs-attribute">columns</span>]=<span class="hljs-value">"columns"</span>
+  (<span class="hljs-attribute">edit</span>)=<span class="hljs-value">"edit($event)"</span>
+  (<span class="hljs-attribute">onPage</span>)=<span class="hljs-value">"onPaging($event)"</span>
+  (<span class="hljs-attribute">filters</span>)=<span class="hljs-value">"onFiltering($event)"</span>
+&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">infigrid</span>&gt;</span>
+</code></pre>
+</li>
+<li class="has-line-data" data-line-start="226" data-line-end="331">
+<p class="has-line-data" data-line-start="226" data-line-end="227">Dans le <code>component.ts</code> du composant</p>
+<pre><code class="has-line-data" data-line-start="229" data-line-end="328" class="language-typescript"><span class="hljs-comment">// ...</span>
+<span class="hljs-keyword">import</span> { HttpClient } from <span class="hljs-string">"@angular/common/http"</span>;
+<span class="hljs-keyword">import</span> { InfigridFilter, InfigridColumn, InfigridConfig } from <span class="hljs-string">'infigrid'</span>;
+
+<span class="hljs-keyword">export</span> <span class="hljs-interface"><span class="hljs-keyword">interface</span> Page </span>{
+  <span class="hljs-comment">// The number of elements in the page</span>
+  pageSize: <span class="hljs-built_in">number</span>;
+  <span class="hljs-comment">// The total number of elements</span>
+  totalElements: <span class="hljs-built_in">number</span>;
+  <span class="hljs-comment">// The total number of pages</span>
+  totalPages: <span class="hljs-built_in">number</span>;
+  <span class="hljs-comment">// The current page number</span>
+  pageIndex: <span class="hljs-built_in">number</span>;
+}
+<span class="hljs-keyword">export</span> <span class="hljs-interface"><span class="hljs-keyword">interface</span> ResponseData </span>{
+  data: <span class="hljs-built_in">Array</span>&lt;<span class="hljs-built_in">any</span>&gt;;
+  pagination: Page;
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-interface"><span class="hljs-keyword">interface</span> RequestPayload </span>{
+  pagination: {
+      pageIndex: <span class="hljs-built_in">number</span>;
+      pageSize: <span class="hljs-built_in">number</span>;
+  };
+  filters: { [colName: <span class="hljs-built_in">string</span>]: <span class="hljs-built_in">any</span> };
+  columns: <span class="hljs-built_in">string</span>[];
+}
+
+@Component({
+  <span class="hljs-comment">// ...</span>
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> PropertiesComponent <span class="hljs-keyword">implements</span> OnInit {
+      <span class="hljs-comment">// ...</span>
+
+      <span class="hljs-keyword">public</span> tableConfig: InfigridConfig = {
+      <span class="hljs-comment">// ...</span>
+          externalPaging: <span class="hljs-literal">true</span>,
+          externalFiltering: <span class="hljs-literal">true</span>, <span class="hljs-comment">// doit etre true si externalPaging: true</span>
+          externalPagingOptions: { <span class="hljs-comment">// doit etre renseigner lorsque externalPaging: true</span>
+              totalElements: <span class="hljs-number">0</span>,
+              totalPages: <span class="hljs-number">0</span>,
+              pageIndex: <span class="hljs-number">0</span>,
+          };
+      <span class="hljs-comment">// ...</span>
+      };
+
+      <span class="hljs-comment">// ...</span>
+
+      <span class="hljs-keyword">private</span> filterPayload = {};
+      <span class="hljs-keyword">private</span> columnListTodisplay = [<span class="hljs-string">"position"</span>, <span class="hljs-string">"name"</span>, <span class="hljs-string">"symbol"</span>, <span class="hljs-string">"discoveryDate"</span>],
+      <span class="hljs-constructor"><span class="hljs-keyword">constructor</span>(private http: HttpClient) </span>{}
+      ngOnInit() {
+          <span class="hljs-keyword">this</span>.getData({
+          columns: <span class="hljs-keyword">this</span>.columnListTodisplay,
+          filters: <span class="hljs-keyword">this</span>.filterPayload,
+          pagination: {
+              pageIndex: <span class="hljs-number">0</span>,
+              pageSize: <span class="hljs-number">21</span>
+          }
+          });
+      }
+
+      getData(payload: RequestPayload) {
+          <span class="hljs-keyword">const</span> url: <span class="hljs-built_in">string</span> = <span class="hljs-string">"http://localhost:3000/api/products"</span>;
+          <span class="hljs-keyword">this</span>.http.post(url, payload).subscribe((res: ResponseData) =&gt; {
+          <span class="hljs-keyword">this</span>.data = res.data;
+          <span class="hljs-keyword">let</span> { pageSize, pageIndex, totalElements, totalPages } = res.pagination;
+          <span class="hljs-keyword">this</span>.tableConfig.pageSize = pageSize;
+          <span class="hljs-keyword">this</span>.tableConfig.externalPagingOptions.pageIndex = pageIndex;
+          <span class="hljs-keyword">this</span>.tableConfig.externalPagingOptions.totalElements = totalElements;
+          <span class="hljs-keyword">this</span>.tableConfig.externalPagingOptions.totalPages = totalPages;
+          });
+      }
+
+      onFiltering(filters: { [columnName: <span class="hljs-built_in">string</span>]: InfigridFilter }) {
+          <span class="hljs-keyword">this</span>.filterPayload = filters;
+          <span class="hljs-keyword">this</span>.getData({
+          columns: [<span class="hljs-string">"position"</span>, <span class="hljs-string">"name"</span>, <span class="hljs-string">"symbol"</span>, <span class="hljs-string">"discoveryDate"</span>],
+          filters: filters,
+          pagination: {
+              pageIndex: <span class="hljs-keyword">this</span>.tableConfig.externalPagingOptions.pageIndex,
+              pageSize: <span class="hljs-keyword">this</span>.tableConfig.pageSize
+          }
+          });
+      }
+
+      onPaging(event) {
+          <span class="hljs-keyword">this</span>.getData({
+          columns: <span class="hljs-keyword">this</span>.columnListTodisplay,
+          filters: <span class="hljs-keyword">this</span>.filterPayload,
+          pagination: {
+              pageIndex: event.pageIndex,
+              pageSize: event.pageSize
+          }
+          });
+      }
+    <span class="hljs-comment">// ...</span>
+}
+</code></pre>
+</li>
+</ul>
