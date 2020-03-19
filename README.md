@@ -326,6 +326,3 @@ La grille est visible sur ce lien [infigrid demo](https://infigrid.azurewebsites
       // ...
   }
   ```
-
-  6.COMMENT MANIPULER LA GRID EN TANT QU'UTILISATEUR voir le fichier
-  INFIGRID.pdf
